@@ -45,7 +45,7 @@ class Line:
 
 
 class Cell:
-    def __init__(self, win):
+    def __init__(self, win=None):
         self.__x1 = 0
         self.__y1 = 0
         self.__x2 = 0
@@ -77,6 +77,8 @@ class Cell:
             self.__win.draw_line(line)
 
     def draw_move(self, to_cell, undo=False):
+        if self.__win is None:
+            return
         half_length = abs(self.__x2 - self.__x1) // 2
         x_center = half_length + self.__x1
         y_center = half_length + self.__y1
