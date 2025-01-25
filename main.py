@@ -26,12 +26,9 @@ def main():
         random.randrange(10000),
     )
 
+    win.maze = maze
+
     print("Maze created")
-    is_solvable = maze.solve()
-    if not is_solvable:
-        print("No solution found")
-    else:
-        print("Maze solved")
 
     win.wait_for_close()
 

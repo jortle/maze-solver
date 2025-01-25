@@ -1,4 +1,4 @@
-from window import Cell
+from cell import Cell
 import time
 import random
 
