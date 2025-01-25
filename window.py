@@ -9,6 +9,7 @@ class Window:
         # dimensions
         self.width = width
         self.height = height
+        self.seed = random.randrange(10000)
 
         # whole window root
 
@@ -47,7 +48,12 @@ class Window:
         # pause/play animation button
 
         # reset maze button
-
+        reset_button = ttk.Button(
+            self.__root, text="Reset Maze", command=self._reset_button
+        )
+        self.__canvas.create_window(
+            self.width * 0.75, 25, anchor=tk.CENTER, window=reset_button
+        )
         # entry box for seed
 
     def redraw(self):
@@ -73,7 +79,18 @@ class Window:
 
     def _new_maze_button(self):
         self._reset_button()
+        self.seed = random.randrange(10000)
+        self._create_maze()
 
+    def _pause_button(self):
+        pass
+
+    def _reset_button(self):
+        self.__canvas.delete("all")
+        self.setup_widgets()
+        self._create_maze()
+
+    def _create_maze(self):
         self.num_rows = 19
         self.num_cols = 38
         self.margin = 50
@@ -87,14 +104,6 @@ class Window:
             self.cell_size_x,
             self.cell_size_y,
             self,
-            random.randrange(10000),
+            self.seed,
         )
-
         self.maze = maze
-
-    def _pause_button(self):
-        pass
-
-    def _reset_button(self):
-        self.__canvas.delete("all")
-        self.setup_widgets()
