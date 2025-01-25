@@ -6,18 +6,6 @@ def dfs_r(maze, i, j):
     if i == maze.num_cols - 1 and j == maze.num_rows - 1:
         return True
     # try each direction
-    # left
-    if (
-        i > 0
-        and not maze._cells[i - 1][j]._visited
-        and not maze._cells[i][j].has_left_wall
-    ):
-        maze._cells[i][j].draw_move(maze._cells[i - 1][j])
-        if dfs_r(maze, i - 1, j):
-            return True
-        else:
-            maze._cells[i][j].draw_move(maze._cells[i - 1][j], True)
-
     # right
     if (
         i < maze.num_cols - 1
@@ -29,18 +17,6 @@ def dfs_r(maze, i, j):
             return True
         else:
             maze._cells[i][j].draw_move(maze._cells[i + 1][j], True)
-
-    # up
-    if (
-        j > 0
-        and not maze._cells[i][j - 1]._visited
-        and not maze._cells[i][j].has_top_wall
-    ):
-        maze._cells[i][j].draw_move(maze._cells[i][j - 1])
-        if dfs_r(maze, i, j - 1):
-            return True
-        else:
-            maze._cells[i][j].draw_move(maze._cells[i][j - 1], True)
 
     # down
     if (
@@ -54,7 +30,31 @@ def dfs_r(maze, i, j):
         else:
             maze._cells[i][j].draw_move(maze._cells[i][j + 1], True)
 
-    return False
+    # left
+    if (
+        i > 0
+        and not maze._cells[i - 1][j]._visited
+        and not maze._cells[i][j].has_left_wall
+    ):
+        maze._cells[i][j].draw_move(maze._cells[i - 1][j])
+        if dfs_r(maze, i - 1, j):
+            return True
+        else:
+            maze._cells[i][j].draw_move(maze._cells[i - 1][j], True)
+
+    # up
+    if (
+        j > 0
+        and not maze._cells[i][j - 1]._visited
+        and not maze._cells[i][j].has_top_wall
+    ):
+        maze._cells[i][j].draw_move(maze._cells[i][j - 1])
+        if dfs_r(maze, i, j - 1):
+            return True
+        else:
+            maze._cells[i][j].draw_move(maze._cells[i][j - 1], True)
+
+        return False
 
 
 def bfs(maze, i, j):
@@ -70,20 +70,12 @@ def bfs(maze, i, j):
         if visited_cell == maze._cells[-1][-1]:  # check for end
             return True
 
-        # left neighbor
-
-        if current_i > 0 and not maze._cells[current_i][current_j].has_left_wall:
-            neighbors.append(maze._cells[current_i - 1][current_j])
-
-        # right neighbor
+            # right neighbor
         if (
             current_i < maze.__num_cols - 1
             and not maze._cells[current_i][current_j].has_right_wall
         ):
             neighbors.append(maze._cells[current_i + 1][current_j])
-        # up neighbor
-        if current_j > 0 and not maze._cells[current_i][current_j].has_top_wall:
-            neighbors.append(maze._cells[current_i][current_j - 1])
         # down neighbor
         if (
             current_j < maze.__num_rows - 1
@@ -91,6 +83,16 @@ def bfs(maze, i, j):
         ):
             neighbors.append(maze._cells[current_i][current_j + 1])
 
+        # left neighbor
+
+        if current_i > 0 and not maze._cells[current_i][current_j].has_left_wall:
+            neighbors.append(maze._cells[current_i - 1][current_j])
+
+        # up neighbor
+        if current_j > 0 and not maze._cells[current_i][current_j].has_top_wall:
+            neighbors.append(maze._cells[current_i][current_j - 1])
+
+            # switch neighbors
         for neighbor in neighbors:
             if not neighbor.visited and neighbor not in to_visit:
                 visited_cell.draw_move(neighbor)

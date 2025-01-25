@@ -14,10 +14,10 @@ This project takes us step by step through the creation of a maze, including dra
 #### What I have added
 * buttons to create a new maze, reset the maze, and solve the maze
 * refactoring to make the button logic easier to create and maintain
+* breadth-first search algorithm a button to switch the algorithm
 
 #### to add
 * buttons to pause/play the animation
-* new search algorithms and a way to switch between them
 * a way to select the rows and columns of the maze
 
 ### How to run
