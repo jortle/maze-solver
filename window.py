@@ -21,6 +21,11 @@ class Window:
         )
         self.__canvas.pack(fill=BOTH, expand=1)
 
+        self.setup_widgets()
+        self.__running = False
+        self.__root.protocol("WM_DELETE_WINDOW", self.close)
+
+    def setup_widgets(self):
         # buttons
         # solve button
         solve_button = ttk.Button(
@@ -45,10 +50,6 @@ class Window:
 
         # entry box for seed
 
-        # functuonal stuff
-        self.__running = False
-        self.__root.protocol("WM_DELETE_WINDOW", self.close)
-
     def redraw(self):
         self.__root.update_idletasks()
         self.__root.update()
@@ -71,6 +72,8 @@ class Window:
         self.maze.solve()
 
     def _new_maze_button(self):
+        self._reset_button()
+
         self.num_rows = 19
         self.num_cols = 38
         self.margin = 50
@@ -93,4 +96,5 @@ class Window:
         pass
 
     def _reset_button(self):
-        pass
+        self.__canvas.delete("all")
+        self.setup_widgets()
