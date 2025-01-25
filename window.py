@@ -10,7 +10,6 @@ class Window:
         self.width = width
         self.height = height
         self.seed = random.randrange(10000)
-
         # whole window root
 
         self.__root = Tk()
@@ -25,6 +24,7 @@ class Window:
         self.setup_widgets()
         self.__running = False
         self.__root.protocol("WM_DELETE_WINDOW", self.close)
+        # creates buttons and other widgets
 
     def setup_widgets(self):
         # buttons
@@ -33,7 +33,7 @@ class Window:
             self.__root, text="Solve Maze", command=self._solve_button
         )
         self.__canvas.create_window(
-            self.width / 2, 25, anchor=tk.CENTER, window=solve_button
+            self.width * 0.5, 25, anchor=tk.CENTER, window=solve_button
         )
 
         # New Maze button
@@ -42,7 +42,7 @@ class Window:
             self.__root, text="New Maze", command=self._new_maze_button
         )
         self.__canvas.create_window(
-            self.width / 4, 25, anchor=tk.CENTER, window=new_maze_button
+            self.width * 0.1, 25, anchor=tk.CENTER, window=new_maze_button
         )
 
         # pause/play animation button
@@ -52,9 +52,29 @@ class Window:
             self.__root, text="Reset Maze", command=self._reset_button
         )
         self.__canvas.create_window(
-            self.width * 0.75, 25, anchor=tk.CENTER, window=reset_button
+            self.width * 0.2, 25, anchor=tk.CENTER, window=reset_button
+        )
+
+        # switch algorithm button
+        switch_algorithm_button = ttk.Button(
+            self.__root, text="Switch Algorithm", command=self._switch_algorithm
+        )
+
+        self.__canvas.create_window(
+            self.width * 0.6, 25, anchor=tk.CENTER, window=switch_algorithm_button
+        )
+        # algorithm label
+
+        algorithm_label = tk.Label(self.__root, text="Algorithm: {self.maze.algorithm}")
+        self.__canvas.create_window(
+            self.width * 0.5, self.height - 25, anchor=tk.CENTER, window=algorithm_label
         )
         # entry box for seed
+
+        # self.seed_entry = ttk.Entry(self.__root)
+        # self.__canvas.create_window(
+        #    self.width * 0.2, self.height - 25, anchor=tk.CENTER, window=self.seed_entry
+        # )
 
     def redraw(self):
         self.__root.update_idletasks()
@@ -75,12 +95,16 @@ class Window:
     def _solve_button(self):
         if self.maze is None:
             return
-        self.maze.solve()
+        print(self.maze.algorithm)
+        self.maze.solve_alg()
 
     def _new_maze_button(self):
         self._reset_button()
+        # if self.seed_entry.get() is None:
         self.seed = random.randrange(10000)
-        self._create_maze()
+        # else:
+        #    self.seed = self.seed_entry.get()
+        # self._create_maze()
 
     def _pause_button(self):
         pass
@@ -107,3 +131,9 @@ class Window:
             self.seed,
         )
         self.maze = maze
+
+    def _switch_algorithm(self):
+        if self.maze.algorithm == "dfs_r":
+            self.maze.algorithm = "bfs"
+        elif self.maze.algorithm == "bfs":
+            self.maze.algorithm = "dfs_r"
