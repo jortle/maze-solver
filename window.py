@@ -21,9 +21,9 @@ class Window:
         )
         self.__canvas.pack(fill=BOTH, expand=1)
 
-        self.setup_widgets()
         self.__running = False
         self.__root.protocol("WM_DELETE_WINDOW", self.close)
+        self.setup_widgets()
         # creates buttons and other widgets
 
     def setup_widgets(self):
@@ -63,12 +63,6 @@ class Window:
         self.__canvas.create_window(
             self.width * 0.6, 25, anchor=tk.CENTER, window=switch_algorithm_button
         )
-        # algorithm label
-
-        algorithm_label = tk.Label(self.__root, text="Algorithm: {self.maze.algorithm}")
-        self.__canvas.create_window(
-            self.width * 0.5, self.height - 25, anchor=tk.CENTER, window=algorithm_label
-        )
         # entry box for seed
 
         # self.seed_entry = ttk.Entry(self.__root)
@@ -89,8 +83,8 @@ class Window:
     def close(self):
         self.__running = False
 
-    def draw_line(self, line, fill_color="black"):
-        line.draw(self.__canvas, fill_color)
+    def draw_line(self, line, fill_color="black", width=2):
+        line.draw(self.__canvas, fill_color, width)
 
     def _solve_button(self):
         if self.maze is None:
@@ -131,9 +125,35 @@ class Window:
             self.seed,
         )
         self.maze = maze
+        self.recreate_algorithm_label()
 
     def _switch_algorithm(self):
         if self.maze.algorithm == "dfs_r":
             self.maze.algorithm = "bfs"
         elif self.maze.algorithm == "bfs":
             self.maze.algorithm = "dfs_r"
+        self.recreate_algorithm_label()
+
+    def recreate_algorithm_label(self):
+        # algorithm label
+        if self.maze.algorithm == "dfs_r":
+            algorithm_label = tk.Label(
+                self.__root, text="Algorithm: depth first search"
+            )
+            self.__canvas.create_window(
+                self.width * 0.5,
+                self.height - 25,
+                anchor=tk.CENTER,
+                window=algorithm_label,
+            )
+
+        elif self.maze.algorithm == "bfs":
+            algorithm_label = tk.Label(
+                self.__root, text="Algorithm: breadth first search"
+            )
+            self.__canvas.create_window(
+                self.width * 0.5,
+                self.height - 25,
+                anchor=tk.CENTER,
+                window=algorithm_label,
+            )

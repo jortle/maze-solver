@@ -112,3 +112,9 @@ class Maze:
             return dfs_r(self, 0, 0)
         elif self.algorithm == "bfs":
             return bfs(self, 0, 0)
+
+    def get_cell_indices(self, cell):
+        for i in range(self.num_cols):
+            for j in range(self.num_rows):
+                if self._cells[i][j] == cell:
+                    return i, j

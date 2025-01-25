@@ -62,4 +62,4 @@ class Cell:
             fill_color = "red"
 
         line = Line(Point(x_center, y_center), Point(x_center2, y_center2))
-        self.__win.draw_line(line, fill_color)
+        self.__win.draw_line(line, fill_color, 6)

@@ -61,31 +61,39 @@ def bfs(maze, i, j):
     to_visit = []
     to_visit.append(maze._cells[i][j])
     maze._cells[i][j].visited = True
+
     while to_visit:
         neighbors = []  # intialize list of neighbors
         visited_cell = to_visit.pop(0)  # visit first cell
+        current_i, current_j = maze.get_cell_indices(visited_cell)
 
         if visited_cell == maze._cells[-1][-1]:  # check for end
             return True
-        visited_cell.visited = True  # mark cell as visited if not end
 
         # left neighbor
 
-        if i > 0 and not maze._cells[i][j].has_left_wall:
-            neighbors.append(maze._cells[i - 1][j])
+        if current_i > 0 and not maze._cells[current_i][current_j].has_left_wall:
+            neighbors.append(maze._cells[current_i - 1][current_j])
 
         # right neighbor
-        if i < maze.__num_cols - 1 and not maze._cells[i][j].has_right_wall:
-            neighbors.append(maze._cells[i + 1][j])
+        if (
+            current_i < maze.__num_cols - 1
+            and not maze._cells[current_i][current_j].has_right_wall
+        ):
+            neighbors.append(maze._cells[current_i + 1][current_j])
         # up neighbor
-        if j > 0 and not maze._cells[i][j].has_top_wall:
-            neighbors.append(maze._cells[i][j - 1])
+        if current_j > 0 and not maze._cells[current_i][current_j].has_top_wall:
+            neighbors.append(maze._cells[current_i][current_j - 1])
         # down neighbor
-        if j < maze.__num_rows - 1 and not maze._cells[i][j].has_bottom_wall:
-            neighbors.append(maze._cells[i][j + 1])
+        if (
+            current_j < maze.__num_rows - 1
+            and not maze._cells[current_i][current_j].has_bottom_wall
+        ):
+            neighbors.append(maze._cells[current_i][current_j + 1])
 
         for neighbor in neighbors:
             if not neighbor.visited and neighbor not in to_visit:
                 visited_cell.draw_move(neighbor)
                 to_visit.append(neighbor)
+                neighbor.visited = True
     return False
