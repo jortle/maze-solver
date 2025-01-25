@@ -2,9 +2,9 @@
 
 ### Summary of Project
 
-> This project is a simple maze solver written in python using TKinter. It is started as the tutorial at [boot.dev](https://www.boot.dev/courses/build-maze-solver-python). I have added some buttons to it to make it more interactive. 
+This project is a simple maze solver written in python using TKinter. It is started as the tutorial at [boot.dev](https://www.boot.dev/courses/build-maze-solver-python). I have added some buttons to it to make it more interactive. 
 
-> This project takes us step by step through the creation of a maze, including drawing and generating all the cells. Breaking down the walls of the cells to make hallways. Lastly, it takes us through creating a depth-first search algorithm to solve the maze and generating a line to animate this process. 
+This project takes us step by step through the creation of a maze, including drawing and generating all the cells. Breaking down the walls of the cells to make hallways. Lastly, it takes us through creating a depth-first search algorithm to solve the maze and generating a line to animate this process. 
 ### Features
 
 #### From the tutorial
